@@ -1,0 +1,95 @@
+{
+	"type": "object",
+	"title": "GitHub license metainformation",
+	"description": "This describes the metadata format used by GitHub to store the semantic information about licenses",
+	"properties": {
+		"title": {
+			"type": "string",
+			"description": "The license full name specified by https://spdx.org/licenses/"
+		},
+		"spdx-id": {
+			"type": "string",
+			"description": "Short identifier specified by https://spdx.org/licenses/"
+		},
+		"description": {
+			"type": "string",
+			"description": "A human-readable description of the license"
+		},
+		"how": {
+			"type": "string",
+			"description": "Instructions on how to implement the license"
+		},
+		"using": {
+			"$anyOf": [{
+					"type": "object",
+					"description": "A map of notable notable projects using the license which serve as examples newcomers can follow",
+					"minItems": 3,
+					"additionalProperties": {
+						"type": "string",
+						"description": "A notable project using the license with straightforward LICENSE files and that can be detected by [licensee](https://github.com/licensee/licensee)",
+						"format": "uri"
+					}
+				}, {
+					"const": null
+				}
+			]
+		},
+		"permissions": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": ["commercial-use", "modifications", "distribution", "private-use", "patent-use"]
+			},
+			"uniqueItems": true
+		},
+		"conditions": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": [
+					"include-copyright",
+					"include-copyright--source",
+					"document-changes",
+					"disclose-source",
+					"network-use-disclose",
+					"same-license",
+					"same-license--file",
+					"same-license--library"
+				]
+			},
+			"uniqueItems": true
+		},
+		"limitations": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": ["trademark-use", "liability", "patent-use", "warranty"]
+			},
+			"uniqueItems": true
+		},
+		"note": {
+			"type": "string",
+			"description": "Additional information about the licenses"
+		},
+		"redirect_from": {
+			"type": "string",
+			"description": "Relative path(s) to redirect to the license from, to prevent breaking old URLs"
+		},
+		"nickname": {
+			"type": "string",
+			"description": "Customary short name if applicable (e.g, GPLv3)"
+		},
+		"hidden": {
+			"type": "boolean",
+			"description": "Whether the license is neither [popular](https://opensource.org/licenses) nor fills out the [spectrum of licenses](https://choosealicense.com/licenses/) from strongly conditional to unconditional (defaults to true)",
+			"default": true
+		},
+		"featured": {
+			"type": "boolean",
+			"description": "Whether the license should be featured on the main page",
+			"default": false
+		}
+	},
+	"required": ["description", "limitations", "conditions", "permissions", "using", "how", "title", "spdx-id"],
+	"$schema": "https://json-schema.org/draft-07/schema"
+}
